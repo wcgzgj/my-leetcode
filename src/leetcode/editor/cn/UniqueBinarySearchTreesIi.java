@@ -64,10 +64,11 @@ class Solution {
         }
         //枚举每一个根节点的可能
         for (int i = start; i <= end; i++) {
-            //获取所有可能左节点
+            //获取所有可能左枝的头结点
             List<TreeNode> left = getAllTreeList(start, i - 1);
-            //获取所有可能右节点
+            //获取所有可能右枝的头结点
             List<TreeNode> right = getAllTreeList(i + 1, end);
+            //遍历所有可能的左右枝组合
             for (TreeNode l : left) {
                 for (TreeNode r : right) {
                     TreeNode treeNode = new TreeNode(i);
