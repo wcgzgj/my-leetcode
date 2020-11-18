@@ -36,7 +36,10 @@
   
   package leetcode.editor.cn;
 
- import javax.swing.tree.TreeNode;
+
+ import domain.TreeNode;
+
+ import java.util.ArrayList;
  import java.util.List;
 
  public class UniqueBinarySearchTreesIi{
@@ -44,25 +47,37 @@
            Solution solution = new UniqueBinarySearchTreesIi().new Solution();
       }
       //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+
 class Solution {
     public List<TreeNode> generateTrees(int n) {
+        if (n<=0) return new ArrayList<TreeNode>();
+        //不能使用0~n-1的范围，因为题目要求第一个节点的值从1开始
+        return getAllTreeList(1,n);
+    }
 
-        return null;
+
+    public List<TreeNode> getAllTreeList(int start,int end) {
+        List<TreeNode> list = new ArrayList<>();
+        if (start>end) {
+            list.add(null);
+            return list;
+        }
+        //枚举每一个根节点的可能
+        for (int i = start; i <= end; i++) {
+            //获取所有可能左节点
+            List<TreeNode> left = getAllTreeList(start, i - 1);
+            //获取所有可能右节点
+            List<TreeNode> right = getAllTreeList(i + 1, end);
+            for (TreeNode l : left) {
+                for (TreeNode r : right) {
+                    TreeNode treeNode = new TreeNode(i);
+                    treeNode.left=l;
+                    treeNode.right=r;
+                    list.add(treeNode);
+                }
+            }
+        }
+        return list;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
