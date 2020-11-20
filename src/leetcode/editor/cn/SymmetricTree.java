@@ -51,10 +51,14 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        if (root==null) return true;
+        return isSymmetric(root,root);
+    }
 
-
-        return false;
+    public boolean isSymmetric(TreeNode p,TreeNode q) {
+        if (p==null && q==null) return true;
+        //前面已经判断过全为空的情况，所以这么写来判断是否有一个为空，是可以的
+        if (p==null || q==null) return false;
+        return p.val==q.val && isSymmetric(p.left,q.right) && isSymmetric(p.right,q.left);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

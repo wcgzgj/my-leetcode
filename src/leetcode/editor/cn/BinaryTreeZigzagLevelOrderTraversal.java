@@ -24,8 +24,12 @@
   
   package leetcode.editor.cn;
 
- import javax.swing.tree.TreeNode;
+ import domain.TreeNode;
+
+ import java.util.ArrayList;
+ import java.util.LinkedList;
  import java.util.List;
+ import java.util.Queue;
 
  public class BinaryTreeZigzagLevelOrderTraversal{
       public static void main(String[] args) {
@@ -35,7 +39,36 @@
 
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        return null;
+        List<List<Integer>> res = new ArrayList<>();
+        if (root==null) return res;
+        Queue<TreeNode> que = new LinkedList<>();
+        //记录遍历的层数
+        int level = 0;
+        que.offer(root);
+        while (!que.isEmpty()) {
+            //记录当前层的元素
+            List<Integer> item = new LinkedList<>();
+            /**
+             * 一定要提前获取当前的层数
+             * 不然queue的大小会随着后的进队列不断改变
+             */
+            int size = que.size();
+            //保证是在当层遍历
+            for (int i = 0; i < size; i++) {
+                TreeNode tmp = que.poll();
+                if (tmp.left!=null) que.offer(tmp.left);
+                if (tmp.right!=null) que.offer(tmp.right);
+
+                if (level%2==0) {//偶数层头插
+                    item.add(tmp.val);
+                } else { //奇数层尾插
+                    item.add(0,tmp.val);
+                }
+            }
+            res.add(item);
+            level++;
+        }
+        return res;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
