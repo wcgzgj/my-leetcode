@@ -57,34 +57,73 @@
  */
 
 class Solution {
+    /**
+     * 方法一：
+     * 借助二叉搜索树的性质，获取两个节点的路径
+     * 然后，获取两个路径的交叉点
+     */
+    // public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    //     if (root==null) return null;
+    //     List<TreeNode> list1 = getPath(root, p);
+    //     List<TreeNode> list2 = getPath(root, q);
+    //     for (int i = list1.size()-1; i >=0; i--) {
+    //         for (int j = list2.size()-1; j >=0; j--) {
+    //             if (list1.get(i)==list2.get(j)) return list1.get(i);
+    //         }
+    //     }
+    //     return null;
+    // }
+    //
+    // //获取从根节点，到该节点的路径
+    // public List<TreeNode> getPath(TreeNode root,TreeNode target) {
+    //     List<TreeNode> list = new ArrayList<>();
+    //     getPath(root,target,list);
+    //     return list;
+    // }
+    //
+    // private void getPath(TreeNode root,TreeNode target,List<TreeNode> list) {
+    //     if (root.val==target.val) {
+    //         list.add(target);
+    //         return;
+    //     }
+    //     list.add(root);
+    //     if (root.val>target.val) getPath(root.left,target,list);
+    //     else getPath(root.right,target,list);
+    // }
+
+    /**
+     * 方法二：
+     * 运用二叉搜索树的性质
+     * 通过一次遍历，得到公共节点
+     */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root==null) return null;
-        List<TreeNode> list1 = getPath(root, p);
-        List<TreeNode> list2 = getPath(root, q);
-        for (int i = list1.size()-1; i >=0; i--) {
-            for (int j = list2.size()-1; j >=0; j--) {
-                if (list1.get(i)==list2.get(j)) return list1.get(i);
-            }
-        }
-        return null;
+        //注意，下面的递归一定要加return,不然，根本就不会去返回其值！！！！
+        if (root.val <p.val && root.val<q.val) return lowestCommonAncestor(root.right,p,q);
+        else if (root.val >p.val && root.val>q.val) return lowestCommonAncestor(root.left,p,q);
+        return root;
     }
 
-    //获取从根节点，到该节点的路径
-    public List<TreeNode> getPath(TreeNode root,TreeNode target) {
-        List<TreeNode> list = new ArrayList<>();
-        getPath(root,target,list);
-        return list;
-    }
+    // public TreeNode recurison(TreeNode root,int min,int max) {
+    //     if (root.val>min && root.val<max) return root;
+    //     if (root.val<min && root.val<max ) recurison(root.right,min,max);
+    //     return recurison(root.left,min,max);
+    // }    //wtf???照理说，不会报错的
 
-    private void getPath(TreeNode root,TreeNode target,List<TreeNode> list) {
-        if (root.val==target.val) {
-            list.add(target);
-            return;
-        }
-        list.add(root);
-        if (root.val>target.val) getPath(root.left,target,list);
-        else getPath(root.right,target,list);
-    }
+    // public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    //     TreeNode ancestor = root;
+    //     while (true) {
+    //         if (ancestor.val<p.val && ancestor.val<q.val) {
+    //             ancestor=ancestor.right;
+    //         } else if (ancestor.val>p.val && ancestor.val>q.val) {
+    //             ancestor=ancestor.left;
+    //         } else {
+    //             break;
+    //         }
+    //     }
+    //     return ancestor;
+    // }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
