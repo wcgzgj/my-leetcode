@@ -62,37 +62,61 @@
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int coinChange(int[] coins, int amount) {
-        int[] memo = new int[amount + 1];
-        int res = dp(coins, amount, memo);
-        return res;
-    }
 
-    public int dp(int []coins,int amount,int[] memo) {
-        //base case
-        if (amount==0) return 0;
-        if (amount<0) return -1;
+    //解法一：从上至下，再解决重复子结构
+    // public int coinChange(int[] coins, int amount) {
+    //     //虽然还是很慢，但是，不消除重叠子问题的话，甚至都过不了
+    //     int[] memo = new int[amount + 1];
+    //     int res = dp(coins, amount, memo);
+    //     return res;
+    // }
+    //
+    // public int dp(int []coins,int amount,int[] memo) {
+    //     //base case
+    //     if (amount==0) return 0;
+    //     if (amount<0) return -1;
+    //
+    //     int res=Integer.MAX_VALUE;
+    //     for (int coin : coins) {
+    //         int subProblem=0;
+    //         //子问题：如果只要凑amount-coin的钱数，需要多少枚硬币
+    //         //通过记忆法，去除重叠子结构，优化时间
+    //         if (amount-coin<0) continue;//提前判断子问题的条件，会不会导致数组越界（负界）
+    //         if (memo[amount-coin]!=0) {
+    //             subProblem=memo[amount-coin];
+    //         } else {
+    //             memo[amount-coin]=dp(coins, amount-coin, memo);
+    //             subProblem=memo[amount-coin];
+    //         }
+    //         if (subProblem==-1) continue;//子问题不成立
+    //         //子问题是少了一枚硬币的情况下
+    //         //所以，要当前情况和子问题的结果加一的结果比较
+    //         res=Math.min(res,subProblem+1);
+    //     }
+    //     if (res==Integer.MAX_VALUE) return -1;
+    //     return res;
+    // }
 
-        int res=Integer.MAX_VALUE;
-        for (int coin : coins) {
-            int subProblem=0;
-            //子问题：如果只要凑amount-coin的钱数，需要多少枚硬币
-            //通过记忆法，去除重叠子结构，优化时间
-            if (amount-coin<0) continue;
-            if (memo[amount-coin]!=0) {
-                subProblem=memo[amount-coin];
-            } else {
-                memo[amount-coin]=dp(coins, amount-coin, memo);
-                subProblem=memo[amount-coin];
-            }
-            if (subProblem==-1) continue;//子问题不成立
-            //子问题是少了一枚硬币的情况下
-            //所以，要当前情况和子问题的结果加一的结果比较
-            res=Math.min(res,subProblem+1);
-        }
-        if (res==Integer.MAX_VALUE) return -1;
-        return res;
-    }
+      //解法二：从下至上
+      public int coinChange(int[] coins, int amount) {
+          //下标表示钱数    值表示当前钱数（下标）下，最少需要多少枚硬币
+          int[] dp = new int[amount + 1];
+          for (int i = 0; i < dp.length; i++) {
+              dp[i]=amount+1;
+          }
+          //当钱数为0的时候，肯定只要0个硬币就可以了
+          dp[0]=0;
+          //外层循环表示每个钱数的可能性
+          for (int i = 0; i <=amount; i++) {
+              //内层循环表示子问题
+              for (int coin : coins) {
+                  //如果当前硬币面值，比需要凑的前数还大，直接跳过
+                  if (i-coin<0) continue;
+                  dp[i]=Math.min(dp[i],dp[i-coin]+1);
+              }
+          }
+          return dp[amount]==amount+1?-1:dp[amount];
+      }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
