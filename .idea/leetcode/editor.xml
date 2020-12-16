@@ -75,6 +75,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/CheckBalanceLcci.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/CheckBalanceLcci.java" />
+              <option name="questionId" value="100176" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/CoinChange.java">
           <value>
             <LeetcodeEditor>
@@ -168,6 +176,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/KthSmallestElementInABst.java" />
               <option name="questionId" value="230" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/LegalBinarySearchTreeLcci.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/LegalBinarySearchTreeLcci.java" />
+              <option name="questionId" value="100177" />
             </LeetcodeEditor>
           </value>
         </entry>
