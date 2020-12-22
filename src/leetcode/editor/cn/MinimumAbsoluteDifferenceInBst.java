@@ -55,6 +55,9 @@ class Solution {
      * 因为题目中给出的是二叉搜索树
      * 所以我认为，最小的差，应该在中序遍历中
      * 相邻的两个数之间
+     *
+     *
+     * 结果是速度100
      */
     int pre=-1;//说了是非负数
     int min=Integer.MAX_VALUE;
