@@ -44,6 +44,11 @@ class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
         if (root==null) return 0;
         recursion(root);
+        /**
+         * 注意：两结点之间的路径长度是以它们之间边的数目表示。
+         * 计算的是边的数目，因为边的数目比节点数目少一
+         * 所以，最后答案是要减1的
+         */
         return max-1;
     }
 
