@@ -71,19 +71,21 @@ class Solution {
     public int findBottomLeftValue(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+        TreeNode res=null;
         while (!queue.isEmpty()) {
             int size = queue.size();
-            if (isBottom(queue,size)) {
-                return queue.poll().val;
-            }
+            // if (isBottom(queue,size)) {
+            //     return queue.poll().val;
+            // }
             for (int i = 0; i < size; i++) {
                 TreeNode tmp = queue.poll();
+                if (i==0) res=tmp;
                 if (tmp.left!=null) queue.offer(tmp.left);
                 if (tmp.right!=null) queue.offer(tmp.right);
             }
         }
         //如果上面的代码正确，是不会返回-1的
-        return -1;
+        return res.val;
     }
 
     //判断是不是底层
