@@ -69,6 +69,7 @@
   
   package leetcode.editor.cn;
 
+ import com.sun.xml.internal.bind.v2.model.core.ID;
  import domain.TreeNode;
 
  public class AddOneRowToTree{
@@ -87,9 +88,30 @@
  */
 class Solution {
     public TreeNode addOneRow(TreeNode root, int v, int d) {
+        if (root==null) return new TreeNode(v);
+        if (d==1) {
+            TreeNode tmp = new TreeNode(v);
+            tmp.left=root;
+            return tmp;
+        }
+        dfs(root,v,d,1);
+        return root;
+    }
 
-
-        return null;
+    public void dfs(TreeNode root,int v,int d,int depth) {
+        if (root==null) return;
+        if (depth==d-1) {
+            TreeNode tmp = new TreeNode(v);
+            TreeNode tmpLeft = root.left;
+            TreeNode tmpRight = root.right;
+            root.left=new TreeNode(v);
+            root.right=new TreeNode(v);
+            root.left.left=tmpLeft;
+            root.right.right=tmpRight;
+            return;
+        }
+        dfs(root.left,v,d,depth+1);
+        dfs(root.right,v,d,depth+1);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

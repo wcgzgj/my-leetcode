@@ -76,6 +76,7 @@ class Solution {
         return t.val+"("+tree2str(t.left)+")"+"("+tree2str(t.right)+")";
     }
 
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
