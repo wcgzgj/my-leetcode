@@ -121,24 +121,41 @@ class Solution {
      * 这就是动态规划里面的最优子结构
      */
     //方法一：递归，但是耗时太长
+    // public int rob(TreeNode root) {
+    //     if(root==null) return 0;
+    //     int money=root.val;
+    //     if (root.left!=null) {
+    //         money+=rob(root.left.left);
+    //         money+=rob(root.left.right);
+    //     }
+    //     if (root.right!=null) {
+    //         money+=rob(root.right.left);
+    //         money+=rob(root.right.right);
+    //     }
+    //     return Math.max(money, rob(root.left)+rob(root.right));
+    // }
+
+    //方法二：树形dp
     public int rob(TreeNode root) {
-        if(root==null) return 0;
-        int money=root.val;
-        if (root.left!=null) {
-            money+=rob(root.left.left);
-            money+=rob(root.left.right);
-        }
-        if (root.right!=null) {
-            money+=rob(root.right.left);
-            money+=rob(root.right.right);
-        }
-        return Math.max(money, rob(root.left)+rob(root.right));
+        int[] dfs = dfs(root);
+        return Math.max(dfs[0],dfs[1]);
     }
-    //方法二：通过hashmap，存储已经计算过的节点（）记忆化
 
+    public int[] dfs(TreeNode root) {
+        if (root==null) return new int[]{0,0};
 
-    //方法三：把记忆化的过程也给省了...
+        //后序遍历
+        int[] left = dfs(root.left);
+        int[] right = dfs(root.right);
 
+        int[] dp = new int[2];
+        //根节点不选，左右节点可选可不选
+        dp[0]=Math.max(left[0],left[1])+Math.max(right[0],right[1]);
+        //选根节点，左右节点不能选
+        dp[1]=root.val+left[0]+right[0];
+
+        return dp;
+    }
 
 }
 //leetcode submit region end(Prohibit modification and deletion)
