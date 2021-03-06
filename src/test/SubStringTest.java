@@ -1,5 +1,8 @@
 package test;
 
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
+
 /**
  * @ClassName SubStringTest
  * @Description TODO
@@ -8,8 +11,9 @@ package test;
  * @Version 1.0
  **/
 public class SubStringTest {
-    public static void main(String[] args) {
-        String str = "abcd";
-        System.out.println(str.substring(0,str.length()-1));
+    @Test
+    public void subStringTest() {
+        String str = "abcde";
+        System.out.println(str.substring(0,2));
     }
 }
