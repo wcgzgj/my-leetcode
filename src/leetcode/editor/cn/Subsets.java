@@ -60,7 +60,7 @@ class Solution {
         backtrack(begin+1,nums,track);
         track.remove(track.size()-1);
 
-        // 考虑不加入i的情况
+        // 考虑不加入当前数的情况
         backtrack(begin+1,nums,track);
     }
 }
