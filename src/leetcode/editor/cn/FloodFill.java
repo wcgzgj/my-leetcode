@@ -33,25 +33,50 @@
 
   
   package leetcode.editor.cn;
-  public class FloodFill{
+
+ import java.util.Arrays;
+ import java.util.LinkedList;
+ import java.util.Queue;
+
+ public class FloodFill{
       public static void main(String[] args) {
            Solution solution = new FloodFill().new Solution();
+          int[][] image = {{1, 1, 1},
+                  {1, 1, 0},
+                  {1, 0, 1}};
+          int[][] newImage = solution.floodFill(image, 1, 1, 2);
+          System.out.println(Arrays.toString(newImage));
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+
+          int[] dx={1,0,0,-1};
+          int[] dy={0,1,-1,0};
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-        if (image.length==0) return image;
-        int maxR=image.length-1;
-        int maxC = image[0].length-1;
-
-    }
-
-    public void dfs(int[][] image,int sr, int sc, int newColor) {
-
-    }
-
-    public boolean inBound(int sr,int sc,int maxR,int maxC) {
-        return false;
+        if (image[sr][sc]==newColor) {
+            return image;
+        }
+        int xlen = image.length;
+        int ylen = image[0].length;
+        //queue存储位置
+        Queue<int[]> queue = new LinkedList<>();
+        int currentColor = image[sr][sc];
+        image[sr][sc]=newColor;
+        queue.offer(new int[]{sr,sc});
+        while (!queue.isEmpty()) {
+            int[] dir = queue.poll();
+            for (int i = 0; i < 4; i++) {
+                //获取遍历的范围
+                int mx = dir[0] + dx[i];
+                int my = dir[1] + dy[i];
+                //范围
+                if (mx>=0 && mx<xlen && my>=0 && my<ylen && image[mx][my]==currentColor) {
+                    image[mx][my]=newColor;
+                    queue.offer(new int[]{mx,my});
+                }
+            }
+        }
+        return image;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
