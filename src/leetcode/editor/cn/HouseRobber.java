@@ -61,22 +61,59 @@ class Solution {
     // }
 
     //方法二：动态规划  不使用dp数组
-    public int rob(int[] nums) {
-        if (nums.length<1) return 0;
-        if (nums.length==1) return nums[0];
+    // public int rob(int[] nums) {
+    //     if (nums.length<1) return 0;
+    //     if (nums.length==1) return nums[0];
+    //
+    //     int len = nums.length;
+    //
+    //     int prepre=0;
+    //     int pre=nums[0];
+    //
+    //     for (int i = 1; i < len; i++) {
+    //         int tmp=Math.max(prepre+nums[i],pre);
+    //         prepre=pre;
+    //         pre=tmp;
+    //     }
+    //     return pre;
+    // }
 
-        int len = nums.length;
+      //方法3：回溯
+          int max=-1;
+      public int rob(int[] nums) {
+          if (nums.length==0) return 0;
+          //选第一个
+          dfs(nums,true,nums[0],1);
+          //不选第一个
+          dfs(nums,false,0,1);
+          return max;
+      }
 
-        int prepre=0;
-        int pre=nums[0];
+      public void dfs(int[] nums,boolean hasPre,int track,int depth) {
+          if (depth==nums.length) {
+              if (track>max) {
+                  max=track;
+              }
+              return;
+          }
+          //如果前一个没有选过
+          //当前可选可不选
+          if (!hasPre) {
+              //选
+              dfs(nums,true,track+nums[depth],depth+1);
+              //不选
+              dfs(nums,false,track,depth+1);
+              //参数若要使用隐式的回溯，千万记住，不能使用++
+          } else {//如果前一个已经选过了，那当前只能不选
+              dfs(nums,false,track,depth+1);
+          }
+      }
+      /*
+        时间复杂度是O(2^n)，高的吓人
+        但是好歹能跑出部分数据（因为题目性质，无法减枝）
+        总算能体会回溯算法的万用性了
+       */
 
-        for (int i = 1; i < len; i++) {
-            int tmp=Math.max(prepre+nums[i],pre);
-            prepre=pre;
-            pre=tmp;
-        }
-        return pre;
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
