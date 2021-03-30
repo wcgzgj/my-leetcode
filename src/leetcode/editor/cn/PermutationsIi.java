@@ -28,52 +28,60 @@
 // -10 <= nums[i] <= 10 
 // 
 // Related Topics 回溯算法 
-// 👍 621 👎 0
+// 👍 647 👎 0
 
   
   package leetcode.editor.cn;
 
- import sun.security.util.Length;
-
+ import javax.xml.transform.Source;
  import java.util.ArrayList;
  import java.util.Arrays;
- import java.util.LinkedList;
  import java.util.List;
 
  public class PermutationsIi{
       public static void main(String[] args) {
            Solution solution = new PermutationsIi().new Solution();
+          int[] arr = {1, 1, 2};
+          List<List<Integer>> res = solution.permuteUnique(arr);
+          System.out.println(res.toString());
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-
-    List<List<Integer>> res = new ArrayList<>();
+          /**
+           * 选择：
+           *    剩下的还没被选中的数字，且当前的数字不能等于前一个数字（保证数组有序）
+           * 边界：
+           *    深度等于长度
+           * 剪枝：
+           *
+           *
+           */
+          List<List<Integer>> res = new ArrayList<>();
     public List<List<Integer>> permuteUnique(int[] nums) {
-        int len = nums.length;
-        //这种剪枝方法，只适合排好序的数组
+        if (nums.length==0) return res;
+        List<Integer> track = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
         Arrays.sort(nums);
-        if (len==0) return res;
-        boolean[] used = new boolean[len];
-        List<Integer> track = new LinkedList<>();
-        backTrack(nums,track,used);
+        dfs(track,nums,0,used);
         return res;
     }
 
-    public void backTrack(int[] nums,List<Integer>track,boolean[] used) {
-        //结束条件
-        if (track.size()==nums.length) {
+    public void dfs(List<Integer> track,int[] nums,int depth,boolean[] used) {
+        if (depth==nums.length) {
             res.add(new ArrayList<>(track));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (!used[i]) {//当前元素没有使用过
-                //如果当前元素的前一个元素，与当前元素相等，且没有使用过
-                if (i>0 && nums[i]==nums[i-1] && !used[i-1]) continue;
-                track.add(nums[i]);
+            //避免重复
+            if (i>0 && nums[i]==nums[i-1] && !used[i-1]) {
+                continue;
+            }
+            if (!used[i]) {
                 used[i]=true;
-                backTrack(nums,track,used);
-                track.remove(track.size()-1);
+                track.add(nums[i]);
+                dfs(track,nums,depth+1,used);
                 used[i]=false;
+                track.remove(track.size()-1);
             }
         }
     }
