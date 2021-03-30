@@ -40,49 +40,46 @@
 // 1 <= target <= 500 
 // 
 // Related Topics 数组 回溯算法 
-// 👍 1205 👎 0
+// 👍 1248 👎 0
 
   
   package leetcode.editor.cn;
 
  import java.util.ArrayList;
- import java.util.LinkedList;
  import java.util.List;
 
  public class CombinationSum{
       public static void main(String[] args) {
            Solution solution = new CombinationSum().new Solution();
-          int[] arr = {2, 3, 5};
-          int target = 8;
-          List<List<Integer>> lists = solution.combinationSum(arr, target);
-          System.out.println(lists);
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    List<List<Integer>> res = new ArrayList<>();
+          /**
+           * 选择范围：
+           *    当前的数列循环递归，每层，每个数都选
+           * 边界：
+           *    当当前数加上以前的数，刚好等于target
+           * 剪枝：
+           *    当当前数加上以前的数，超过target
+           */
+          List<List<Integer>> res=new ArrayList<>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        int len = candidates.length;
-        if (len==0) return res;
-
-        List<Integer> track = new LinkedList<>();
-        backTrack(candidates,0,track,target,0);
+        if (candidates.length==0) return res;
+        List<Integer> track = new ArrayList<>();
+        dfs(0,track,candidates,target,0);
         return res;
     }
 
-    public void backTrack(int[] candidates,int begin,List<Integer> track,int target,int curr) {
-        //边界条件
-        if (curr==target) {
+    public void dfs(int trackSum,List<Integer> track,int[] nums,int target,int begin) {
+        if (trackSum>target) return;
+        if (trackSum==target) {
             res.add(new ArrayList<>(track));
             return;
         }
-        int len = candidates.length;
-        for (int i = begin; i < len; i++) {
-            if (curr+candidates[i]<=target) {//剪枝
-                track.add(candidates[i]);
-                //这里是理解重点！！！！！！  即为什么这里传入的是i，不是begin+1
-                backTrack(candidates,i,track,target,curr+candidates[i]);
-                track.remove(track.size()-1);
-            }
+        for (int i = begin; i < nums.length; i++) {
+            track.add(nums[i]);
+            dfs(trackSum+nums[i],track,nums,target,i);
+            track.remove(track.size()-1);
         }
     }
 }
