@@ -62,8 +62,13 @@ class Solution {
     //         res=true;
     //         return;
     //     }
+    //     //边界
     //     if (depth==nums.length) {
     //         return;
+    //     }
+    //     //剪枝
+    //     if (track>sum-track) {
+    //         return ;
     //     }
     //     //选
     //     dfs(sum,track+nums[depth],nums,depth+1);
@@ -74,8 +79,9 @@ class Solution {
       //方法2：动态规划
       //还是跑不掉的，回溯铁定会超时
     public boolean canPartition(int[] nums) {
-        return false;
 
+
+        return false;
     }
 
 }

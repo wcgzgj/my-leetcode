@@ -13,13 +13,12 @@
 //  [3,2,1]
 //] 
 // Related Topics 回溯算法 
-// 👍 1186 👎 0
+// 👍 1251 👎 0
 
   
   package leetcode.editor.cn;
 
  import java.util.ArrayList;
- import java.util.LinkedList;
  import java.util.List;
 
  public class Permutations{
@@ -28,41 +27,37 @@
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    List<List<Integer>> res = new ArrayList<>();
-    public List<List<Integer>> permute(int[] nums) {
-        int len = nums.length;
-        if (len==0) return res;
-        //记录路径，别忘了到边界的时候，撤回
-        List<Integer> track = new LinkedList<>();
-        //记录当前位置是否被使用过
-        boolean[] used = new boolean[len];
 
-        dfs(track,0,used,nums);
+          /**
+           * 选择范围：
+           *    当前数字，选还是不选
+           * 边界条件：
+           *    深度，等于数组长度
+           * 剪枝：
+           *    全部遍历，无法剪枝
+           * @param nums
+           * @return
+           */
+          List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        if (nums.length==0) return res;
+        List<Integer> track = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
+        dfs(track,0,nums,used);
         return res;
     }
 
-      /**
-       * 回溯
-       * @param track
-       * @param depth 记录深度
-       * @param used
-       * @param nums
-       */
-    public void dfs(List<Integer>track,int depth,boolean[] used,int[] nums) {
-        //结束条件
-        if (depth==used.length) {
-            //这里一定要使用新的内存空间，不然，所有答案都会是一样的
+    public void dfs(List<Integer> track,int depth,int[] nums,boolean[] used) {
+        //边界
+        if (depth==nums.length) {
             res.add(new ArrayList<>(track));
             return;
         }
-
         for (int i = 0; i < nums.length; i++) {
-            //用used数组替代contains函数，使得时间复杂度由O(n)->O(1)
             if (!used[i]) {
                 used[i]=true;
                 track.add(nums[i]);
-                dfs(track,depth+1,used,nums);
-                //撤销操作
+                dfs(track,depth+1,nums,used);
                 used[i]=false;
                 track.remove(track.size()-1);
             }

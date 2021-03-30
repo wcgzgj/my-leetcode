@@ -85,7 +85,11 @@ class Solution {
         int m = board.length;
         int n = board[0].length;
         //边界条件
-        if (depth> arr.length-1 || r<0 || r>=m || c<0 || c>=n || arr[depth]!=board[r][c] || visited[r][c]) {
+        if (depth> arr.length-1 || r<0 || r>=m || c<0 || c>=n ) {
+            return;
+        }
+        //剪枝
+        if(arr[depth]!=board[r][c] || visited[r][c]) {
             return;
         }
         //取得值
