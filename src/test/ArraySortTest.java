@@ -1,9 +1,6 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName ArraySortTest
@@ -14,20 +11,22 @@ import java.util.List;
  **/
 public class ArraySortTest {
     public static void main(String[] args) {
-        Integer []arr={4,2,6,1,9};
-        List<Integer> list = new ArrayList<>();
-        Collections.addAll(list, arr);
-        list.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1-o2;
-            }
-        });
-
-        arr = list.toArray(new Integer[list.size()]);
-        for (Integer integer : arr) {
-            System.out.println(integer);
-        }
+        int []arr={4,2,6,1,9};
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
+        // List<Integer> list = new ArrayList<>();
+        // Collections.addAll(list, arr);
+        // list.sort(new Comparator<Integer>() {
+        //     @Override
+        //     public int compare(Integer o1, Integer o2) {
+        //         return o1-o2;
+        //     }
+        // });
+        //
+        // arr = list.toArray(new Integer[list.size()]);
+        // for (Integer integer : arr) {
+        //     System.out.println(integer);
+        // }
 
     }
 }
