@@ -51,7 +51,11 @@ class Solution {
 
                 int sum = nums[l] + nums[r] + nums[i];
                 if (sum == 0) {
-                    //去重
+                    /**
+                     * 去重
+                     * 在 while 中，如果要 continue，一定要注意有没有修改之前的条件
+                     * 如果没有修改，有可能造成死循环！！
+                     */
                     if (l+1<r-1 && (nums[l]==nums[l+1]&&nums[r]==nums[r-1])) {
                         l++;
                         r--;
