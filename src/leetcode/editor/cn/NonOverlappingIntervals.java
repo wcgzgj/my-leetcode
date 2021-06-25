@@ -41,14 +41,54 @@
 
   
   package leetcode.editor.cn;
-  public class NonOverlappingIntervals{
+
+ import java.util.Arrays;
+ import java.util.Comparator;
+
+ public class NonOverlappingIntervals{
       public static void main(String[] args) {
            Solution solution = new NonOverlappingIntervals().new Solution();
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
-        return -1;
+        if (intervals==null || intervals.length==0) {
+            return 0;
+        }
+
+        /**
+         * 按照区间的末尾，由小到大排序
+         */
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1]>o2[1]) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
+        /**
+         * 记录应被去除的区间个数
+         */
+        int count = 0;
+        for (int i = 1; i <intervals.length ; i++) {
+            int step=1;
+            while ( i-step>=0 && intervals[i-step][1]==-1) {
+                step++;
+            }
+            /**
+             * 要和前面没被删除的区间进行比较
+             */
+            if (intervals[i][0]<intervals[i-step][1]) {
+                /**
+                 * 将该区间的末尾标记为-1，表示该区间被删除
+                 */
+                intervals[i][1]=-1;
+                count++;
+            }
+        }
+        return count;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
