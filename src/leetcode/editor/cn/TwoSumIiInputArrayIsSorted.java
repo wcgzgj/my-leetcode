@@ -55,15 +55,28 @@ class Solution {
          * 注意，下标是从1开始的
          * 所以最后获得结果后，一定要为每个下标 +1
          */
-        if (numbers==null || numbers.length<=1) {
-            return null;
-        }
-        for (int i = 0; i < numbers.length - 1; i++) {
-            int j=i+1;
-            while (j<numbers.length && numbers[i]+numbers[j]<target) j++;
-            if (j<numbers.length && numbers[i]+numbers[j]==target) {
-                return new int[]{i+1,j+1};
-            }
+        /**
+         * 1、普通解法
+         */
+        // if (numbers==null || numbers.length<=1) {
+        //     return null;
+        // }
+        // for (int i = 0; i < numbers.length - 1; i++) {
+        //     int j=i+1;
+        //     while (j<numbers.length && numbers[i]+numbers[j]<target) j++;
+        //     if (j<numbers.length && numbers[i]+numbers[j]==target) {
+        //         return new int[]{i+1,j+1};
+        //     }
+        // }
+        // return null;
+        /**
+         * 2、双指针解法
+         */
+        int l=0,r=numbers.length-1;
+        while (l<r) {
+            if (numbers[l]+numbers[r]<target) l++;
+            else if (numbers[l]+numbers[r]>target) r--;
+            else return new int[]{++l,++r};
         }
         return null;
     }
