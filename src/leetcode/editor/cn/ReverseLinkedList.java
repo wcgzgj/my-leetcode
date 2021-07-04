@@ -32,35 +32,28 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        //方法1：使用栈
-        // if (head==null) return head;
-        // Stack<ListNode> stack = new Stack<>();
-        // while (head!=null) {
-        //     stack.push(head);
-        //     head=head.next;
+        /**
+         * 方法1 递归
+         */
+        if (head==null || head.next==null) return head;
+        ListNode newHead = reverseList(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newHead;
+
+        /**
+         * 方法2 迭代
+         * 在做这道题的时候，去想那个 gif
+         */
+        // ListNode pre=null;
+        // ListNode curr=head;
+        // while (curr!=null) {
+        //     ListNode tmp = curr.next;
+        //     curr.next=pre;
+        //     pre=curr;
+        //     curr=tmp;
         // }
-        // head=stack.pop();
-        // ListNode tail = head;
-        // while (!stack.isEmpty()) {
-        //     tail.next=stack.pop();
-        //     tail=tail.next;
-        // }
-        // tail.next=null;
-        // return head;
-
-        //方法2：递归
-        ListNode curr = head;
-        ListNode prev=null;
-        while (curr!=null) {
-            ListNode tmp = curr.next;
-            curr.next=prev;
-            prev=curr;
-            curr=tmp;
-        }
-        return prev;
-
-        //方法3：递归
-
+        // return pre;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

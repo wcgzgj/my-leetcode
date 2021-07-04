@@ -53,13 +53,23 @@ class Solution {
         return root;
     }
 
+    // public void reverseRecurison(TreeNode root) {
+    //     if (root==null) return;
+    //     TreeNode tmp = root.left;
+    //     root.left=root.right;
+    //     root.right=tmp;
+    //     reverseRecurison(root.left);
+    //     reverseRecurison(root.right);
+    // }
+
     public void reverseRecurison(TreeNode root) {
         if (root==null) return;
+
+        reverseRecurison(root.left);
+        reverseRecurison(root.right);
         TreeNode tmp = root.left;
         root.left=root.right;
         root.right=tmp;
-        reverseRecurison(root.left);
-        reverseRecurison(root.right);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
