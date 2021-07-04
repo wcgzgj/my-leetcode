@@ -46,19 +46,58 @@ class Solution {
         /**
          * 方法一: 链表转数组
          */
-        if (head==null) return true;
-        List<Integer> list = new ArrayList<>();
-        while (head!=null) {
-            list.add(head.val);
-            head=head.next;
+        // if (head==null) return true;
+        // List<Integer> list = new ArrayList<>();
+        // while (head!=null) {
+        //     list.add(head.val);
+        //     head=head.next;
+        // }
+        // int i=0,j=list.size()-1;
+        // while (i<=j) {
+        //     if (list.get(i)!=list.get(j)) return false;
+        //     i++;
+        //     j--;
+        // }
+        // return true;
+
+        /**
+         * 方法二：折半翻转，再判断
+         */
+        if (head==null || head.next==null) return true;
+
+        // 使用快慢指针，找链表中点
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next!=null && fast.next.next!=null) {
+            fast=fast.next.next;
+            slow=slow.next;
         }
-        int i=0,j=list.size()-1;
-        while (i<=j) {
-            if (list.get(i)!=list.get(j)) return false;
-            i++;
-            j--;
+        slow.next=reverse(slow.next);
+        slow=slow.next;
+        while (slow!=null) {
+            if (head.val!=slow.val) return false;
+            head=head.next;
+            slow=slow.next;
         }
         return true;
+    }
+
+    /**
+     * 翻转链表
+     * @param head
+     * @return
+     */
+    ListNode reverse(ListNode head) {
+        if (head==null || head.next==null) return head;
+        ListNode pre=null;
+        ListNode curr=head;
+        while (curr!=null) {
+            ListNode tmp = curr;
+            curr=curr.next;
+            tmp.next=pre;
+            pre=tmp;
+        }
+        return pre;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
