@@ -60,21 +60,57 @@ class Solution {
         /**
          * 方法1 递归
          */
-        if (l1==null) return l2;
-        if (l2==null) return l1;
-        if (l1.val<=l2.val) {
-            l1.next=mergeTwoLists(l1.next,l2);
-            return l1;
-        }
-        if (l2.val<l1.val) {
-            l2.next=mergeTwoLists(l1,l2.next);
-            return l2;
-        }
-        return null;
+        // if (l1==null) return l2;
+        // if (l2==null) return l1;
+        // if (l1.val<=l2.val) {
+        //     l1.next=mergeTwoLists(l1.next,l2);
+        //     return l1;
+        // }
+        // if (l2.val<l1.val) {
+        //     l2.next=mergeTwoLists(l1,l2.next);
+        //     return l2;
+        // }
+        // return null;
 
         /**
          * 方法2 迭代
          */
+        ListNode head=new ListNode(-1);
+        ListNode tail=head;
+        while (l1!=null && l2!=null) {
+            // if (l1.val<=l2.val) {
+            //     if (head==null) {
+            //         head=l1;
+            //         tail=head;
+            //     } else {
+            //         tail.next=l1;
+            //         tail=tail.next;
+            //         l1=l1.next;
+            //     }
+            // } else { // l2.val<l1.val
+            //     if (head==null) {
+            //         head=l2;
+            //         tail=head;
+            //     } else {
+            //         tail.next=l2;
+            //         tail=tail.next;
+            //         l2=l2.next;
+            //     }
+            // }
+            if(l1.val<=l2.val) {
+                tail.next=l1;
+                l1=l1.next;
+            } else {
+                tail.next=l2;
+                l2=l2.next;
+            }
+            tail=tail.next;
+        }
+
+        // 收尾工作
+        tail.next=l1==null?l2:l1;
+
+        return head.next;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
