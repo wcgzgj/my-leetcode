@@ -28,41 +28,33 @@
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 
-          /**
-           * 选择范围：
-           *    剩下的还没被选中的数字
-           * 边界条件：
-           *    深度，等于数组长度
-           * 剪枝：
-           *    全部遍历，无法剪枝
-           * @param nums
-           * @return
-           */
-          List<List<Integer>> res = new ArrayList<>();
     public List<List<Integer>> permute(int[] nums) {
-        if (nums.length==0) return res;
-        List<Integer> track = new ArrayList<>();
-        boolean[] used = new boolean[nums.length];
-        dfs(track,0,nums,used);
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums==null || nums.length==0) return res;
+        boolean[] visited=new boolean[nums.length];
+        recursion(nums,visited,new ArrayList<Integer>(),res,0);
         return res;
     }
 
-    public void dfs(List<Integer> track,int depth,int[] nums,boolean[] used) {
-        //边界
-        if (depth==nums.length) {
-            res.add(new ArrayList<>(track));
+    // 递归
+    public void recursion(int[]nums,boolean[] visited,List<Integer>curr,List<List<Integer>>res,int depth) {
+        // 递归边界
+        if (depth>=nums.length) {
+            res.add(new ArrayList<>(curr));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (!used[i]) {
-                used[i]=true;
-                track.add(nums[i]);
-                dfs(track,depth+1,nums,used);
-                used[i]=false;
-                track.remove(track.size()-1);
+            if (!visited[i]) {
+                curr.add(nums[i]);
+                visited[i]=true;
+                recursion(nums,visited,curr,res,depth+1);
+                // 回溯
+                visited[i]=false;
+                curr.remove(curr.size()-1);
             }
         }
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
