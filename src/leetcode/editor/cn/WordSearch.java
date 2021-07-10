@@ -43,7 +43,8 @@
           char[][] board = {{'A', 'B', 'C', 'E' },
                             {'S', 'F', 'E', 'S' },
                             {'A', 'D', 'E', 'E' }};
-          String word = "ABFEEE";
+          String word = "ABCESEEEC";
+          // String word = "B";
 
           // [["A","B","C","E"],
           //  ["S","F","C","S"],
@@ -60,51 +61,38 @@
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 
-          /**
-           * 当输入数据是大量重复的数据的时候，会出现超时。。
-           */
-          boolean flag=false;
     public boolean exist(char[][] board, String word) {
-        int m = board.length;
-        int n = board[0].length;
-        char[] arr = word.toCharArray();
-        boolean[][] visited = new boolean[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                dfs(arr,board,0,i,j,visited);
-                //剪枝优化，如果能找到答案，直接返回
-                if (flag) {
-                    return true;
-                }
+        if (word==null || word.length()==0) return true;
+        if (board==null ||board.length==0 || board[0].length==0) return false;
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (recursion(i,j,board,visited,word,0)) return true;
             }
         }
-        return flag;
+        return false;
     }
 
-    public void dfs(char[] arr,char[][] board,int depth,int r,int c,boolean[][] visited) {
-        int m = board.length;
-        int n = board[0].length;
-        //边界条件
-        if (depth> arr.length-1 || r<0 || r>=m || c<0 || c>=n ) {
-            return;
-        }
-        //剪枝
-        if(arr[depth]!=board[r][c] || visited[r][c]) {
-            return;
-        }
-        //取得值
-        if (depth==arr.length-1 && arr[depth]==board[r][c]) {
-            flag=true;
-            return;
-        }
-        visited[r][c]=true;
-        dfs(arr,board,depth+1,r-1,c,visited);
-        dfs(arr,board,depth+1,r+1,c,visited);
-        dfs(arr,board,depth+1,r,c-1,visited);
-        dfs(arr,board,depth+1,r,c+1,visited);
-        visited[r][c]=false;//回溯 !!!!!
-    }
 
+    public boolean recursion(int x,int y,char[][]board,boolean[][] visited,String word,int depth) {
+        // 边界条件
+        if (depth>=word.length()) {
+            return true;
+        }
+        // 剪枝
+        if (x<0 || x>=board.length || y<0 || y>=board[0].length // 超出边界
+                || visited[x][y] // 已经访问
+                || word.charAt(depth)!=board[x][y]) return false; // 符号不匹配
+        visited[x][y] = true;
+        boolean res = false;
+        int[]xs={0,0,1,-1};
+        int[]ys={1,-1,0,0};
+        for (int i = 0; i < 4; i++) {
+            res = res || recursion(x+xs[i],y+ys[i],board,visited,word, depth+1);
+        }
+        visited[x][y] = false;
+        return res;
+    }
 
 }
 //leetcode submit region end(Prohibit modification and deletion)
