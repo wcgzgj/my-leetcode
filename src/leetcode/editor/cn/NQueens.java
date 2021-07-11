@@ -77,6 +77,7 @@ class Solution {
                           List<String> curr, // 当前情况
                           List<List<String>> res) { // 所有情况总和
         // 边界条件  x 是下标，n 是长度，所以是 >=
+        // 这里加上一个 y==0 是为了去掉重复答案，不然会出现 N 个重复答案
         if (x>=n && y==0) {
             res.add(new ArrayList<>(curr));
             return;
