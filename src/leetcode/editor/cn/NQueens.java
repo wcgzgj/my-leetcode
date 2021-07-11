@@ -39,6 +39,7 @@
   
   package leetcode.editor.cn;
 
+ import java.util.ArrayList;
  import java.util.Collections;
  import java.util.List;
  import java.util.stream.Collectors;
@@ -46,35 +47,83 @@
  public class NQueens{
       public static void main(String[] args) {
            Solution solution = new NQueens().new Solution();
+          List<List<String>> lists = solution.solveNQueens(8);
+          for (List<String> list : lists) {
+              System.out.println(list);
+          }
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public List<List<String>> solveNQueens(int n) {
-
-
-
-        return null;
+        List<List<String>> res = new ArrayList<>();
+        if (n<=0) return res;
+        // 已访问的行
+        boolean[] visitedRow = new boolean[n];
+        // 左斜已访问
+        boolean[] visitedLeft = new boolean[2 * n - 1];
+        // 右斜已访问
+        boolean[] visitedRight = new boolean[2 * n - 1];
+        for (int i = 0; i < n; i++) {
+            recursion(0,i,n,visitedRow,visitedLeft,visitedRight,new ArrayList<String>(),res);
+        }
+        return res;
     }
 
-    public void dfs() {
+    public void recursion(int x,int y,int n,
+                          boolean[] visitedRow, //列项去重
+                          boolean[] visitedLeft, // 左斜去重
+                          boolean[] visitedRight, // 右斜去重
+                          List<String> curr, // 当前情况
+                          List<List<String>> res) { // 所有情况总和
+        // 边界条件  x 是下标，n 是长度，所以是 >=
+        if (x>=n) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        // 剪枝
+        if (visitedRow[y] ||
+                visitedLeft[getLeftIndex(x,y)] ||
+                visitedRight[getRightIndex(x,y,n)]) {
+            return;
+        }
 
-
+        // 回溯
+        visitedRow[y]=true;
+        visitedLeft[getLeftIndex(x,y)]=true;
+        visitedRight[getRightIndex(x,y,n)]=true;
+        curr.add(getRowStr(y,n));
+        for (int i = 0; i < n; i++) {
+            recursion(x+1,i,n,visitedRow,visitedLeft,visitedRight,curr,res);
+        }
+        visitedRow[y]=false;
+        visitedLeft[getLeftIndex(x,y)]=false;
+        visitedRight[getRightIndex(x,y,n)]=false;
+        curr.remove(curr.size()-1);
     }
 
-    //判断当前位置，皇后能否放置
-    public boolean isPlaceable(int r,int c,char[][] map) {
-
-
-        return false;
+    // 获取左斜数组下标
+    public int getLeftIndex(int x,int y) {
+        return x+y;
     }
 
-
-
-    public List<List<String>> mapToList(char[][]map) {
-
-
-        return null;
+    // 获取右斜数组下标
+    public int getRightIndex(int x,int y,int n) {
+        return (n-1)-(x-y);
     }
+
+    // 获取一行的字符串表现形式
+    public String getRowStr(int colIndex,int n) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            if (colIndex==i) {
+                sb.append("*");
+            } else {
+                sb.append(".");
+            }
+        }
+        return sb.toString();
+    }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

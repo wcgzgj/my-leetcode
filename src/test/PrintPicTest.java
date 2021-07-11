@@ -20,7 +20,7 @@ public class PrintPicTest {
          *           3    2      5
          *           1    3      6
          */
-        print(7);
+        print(20);
 
     }
 
