@@ -47,7 +47,7 @@
  public class NQueens{
       public static void main(String[] args) {
            Solution solution = new NQueens().new Solution();
-          List<List<String>> lists = solution.solveNQueens(8);
+          List<List<String>> lists = solution.solveNQueens(4);
           for (List<String> list : lists) {
               System.out.println(list);
           }
@@ -63,6 +63,7 @@ class Solution {
         boolean[] visitedLeft = new boolean[2 * n - 1];
         // 右斜已访问
         boolean[] visitedRight = new boolean[2 * n - 1];
+
         for (int i = 0; i < n; i++) {
             recursion(0,i,n,visitedRow,visitedLeft,visitedRight,new ArrayList<String>(),res);
         }
@@ -76,7 +77,7 @@ class Solution {
                           List<String> curr, // 当前情况
                           List<List<String>> res) { // 所有情况总和
         // 边界条件  x 是下标，n 是长度，所以是 >=
-        if (x>=n) {
+        if (x>=n && y==0) {
             res.add(new ArrayList<>(curr));
             return;
         }
@@ -116,7 +117,7 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
             if (colIndex==i) {
-                sb.append("*");
+                sb.append("Q");
             } else {
                 sb.append(".");
             }
