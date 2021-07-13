@@ -52,75 +52,43 @@
       public static void main(String[] args) {
            Solution solution = new LongestPalindromicSubstring().new Solution();
           String str = "ababbc";
-          System.out.println(solution.longestPalindrome(str));
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    //方法一：穷举
-    // int max=0;
-    // String str="";
-    // public String longestPalindrome(String s) {
-    //     int n = s.length();
-    //
-    //     for (int i = 0; i < n; i++) {
-    //         for (int j = i; j < n; j++) {
-    //             if (isHuiWen(s.substring(i,j+1))) {
-    //                 if ((j-i+1)>max) {
-    //                     max=j-i+1;
-    //                     str=s.substring(i,j+1);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return str;
-    // }
-    //
-    // public boolean isHuiWen(String str) {
-    //     if (str.length()<=1) return true;
-    //     int i=0;
-    //     int j=str.length()-1;
-    //     while (i<=j) {
-    //         if (str.charAt(i)!=str.charAt(j)) return false;
-    //         i++;
-    //         j--;
-    //     }
-    //     return true;
-    // }
 
-    //方法二：动态规划
+          /**
+           * 暴力解法
+           * 直接尝试获取所有位置的回文串
+           * 然后对比，找出最长的回文串
+           * @param s
+           * @return
+           */
     public String longestPalindrome(String s) {
-        //空串和长度为1的串一定是回文串
-        if (s.length()<=1) return s;
-
-        char[] array = s.toCharArray();
-        int len = s.length();
-        int beginIndex=0;
-        int maxLen=0;
-        //状态
-        boolean[][] dp = new boolean[len][len];
-        //初始化
-        for (int i = 0; i < len; i++) {
-            dp[i][i]=true;
+        if (s==null || s.length()==0) return "";
+        if (s.length()==1) return s;
+        String max="";
+        for (int i = 0; i < s.length(); i++) {
+            String str1 = getMaxSub(s, i, i);
+            String str2 = getMaxSub(s, i, i+1);
+            max=max.length()<str1.length()?str1:max;
+            max=max.length()<str2.length()?str2:max;
         }
+        return max;
+    }
 
-        //状态转移方程的实现
-        for (int i = 0; i < len; i++) {
-            for (int j = i+1; j < len; j++) {
-                if (array[i]!=array[j]) dp[i][j]=false;
-                else {
-                    //边界条件
-                    if (j-i<3) dp[i][j]=true;
-                    else dp[i][j]=dp[i+1][j-1];
-                }
-
-                //考虑输出
-                if (dp[i][j] && j-i+1>maxLen) {
-                    maxLen=j-i+1;
-                    beginIndex=i;
-                }
-            }
+          /**
+           * 获取当前位置延伸出来的最长回文字符串
+           * @param s
+           * @param l
+           * @param r
+           * @return
+           */
+    public String getMaxSub(String s,int l,int r) {
+        while (l>=0 && r<s.length() && s.charAt(l)==s.charAt(r)) {
+            l--;
+            r++;
         }
-        return s.substring(beginIndex,beginIndex+maxLen);
+        return s.substring(l+1,r);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

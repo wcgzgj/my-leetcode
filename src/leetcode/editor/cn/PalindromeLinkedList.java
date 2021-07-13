@@ -20,7 +20,7 @@
   package leetcode.editor.cn;
 
  import domain.ListNode;
- import org.junit.jupiter.api.Test;
+
  import test.ArrayListIndexTest;
 
  import java.util.ArrayList;
