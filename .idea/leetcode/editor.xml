@@ -835,6 +835,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/ShortestBridge.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ShortestBridge.java" />
+              <option name="questionId" value="971" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/SingleNumber.java">
           <value>
             <LeetcodeEditor>
@@ -984,6 +992,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/WordFrequency.java" />
               <option name="questionId" value="192" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/WordLadderIi.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/WordLadderIi.java" />
+              <option name="questionId" value="126" />
             </LeetcodeEditor>
           </value>
         </entry>
