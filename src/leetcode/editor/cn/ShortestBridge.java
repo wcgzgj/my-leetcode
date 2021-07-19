@@ -42,123 +42,155 @@
 
  import java.util.*;
 
- public class ShortestBridge{
-      public static void main(String[] args) {
-           Solution solution = new ShortestBridge().new Solution();
-      }
-      //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    // public int shortestBridge(int[][] grid) {
-    //     return -1;
-    // }
+ public class ShortestBridge {
+     public static void main(String[] args) {
+         Solution solution = new ShortestBridge().new Solution();
+         /**
+          * 2.-1.2.2
+          * -1,-1,-1,-1
+          * -1,-1,-1,-1
+          */
+     }
 
-          /**
-           * 下面是官方答案
-           */
-          public int shortestBridge(int[][] A) {
-              int R = A.length, C = A[0].length;
+     //leetcode submit region begin(Prohibit modification and deletion)
+     class Solution {
+         public int shortestBridge(int[][] grid) {
+             if (grid==null || grid.length==0 || grid[0].length==0) return 0;
+             int R = grid.length;
+             int C = grid[0].length;
+             boolean flag = false;
 
+             // 将第一座岛屿的位置，全部换成2
+             for (int i = 0; i < R; i++) {
+                 if (flag) break;
+                 for (int j = 0; j < C; j++) {
+                     if (grid[i][j]==1) {
+                         markSourceIsland(grid,i,j);
+                         flag=true;
+                         break;
+                     }
+                 }
+             }
 
-              int[][] colors = getComponents(A);
+             // 用来进行广度遍历的辅助队列
+             Queue<Node> queue = new LinkedList<>();
 
-              Queue<Node> queue = new LinkedList();
-              Set<Integer> target = new HashSet();
-
-              for (int r = 0; r < R; ++r)
-                  for (int c = 0; c < C; ++c) {
-                      // 将两座岛屿的位置信息，存入各自的集合
-                      if (colors[r][c] == 1) {
-                          // 岛屿A 因为还要存储深度信息，所以不能进行压缩
-                          queue.add(new Node(r, c, 0));
-                      } else if (colors[r][c] == 2) {
-                          target.add(r * C + c);
-                      }
-                  }
-
-              while (!queue.isEmpty()) {
-                  Node node = queue.poll();
-                  if (target.contains(node.r * C + node.c))
-                      return node.depth - 1;
-                  for (int nei: neighbors(A, node.r, node.c)) {
-                      int nr = nei / C, nc = nei % C;
-                      if (colors[nr][nc] != 1) {
-                          queue.add(new Node(nr, nc, node.depth + 1));
-                          colors[nr][nc] = 1;
-                      }
-                  }
-              }
-
-              throw null;
-          }
-
-          /**
-           * 搜索到两座岛屿的位置信息
-           * 岛 A 不变，还是以1表示，岛 B 全部换用 2 表示
-           * @param A
-           * @return
-           */
-          public int[][] getComponents(int[][] A) {
-              int R = A.length, C = A[0].length;
-              int[][] colors = new int[R][C];
-              int t = 0;
-
-              for (int r0 = 0; r0 < R; ++r0)
-                  for (int c0 = 0; c0 < C; ++c0)
-                      // 当前位置是岛屿，且当前位置之前还没被遍历过
-                      if (colors[r0][c0] == 0 && A[r0][c0] == 1) {
-                          // Start dfs
-                          Stack<Integer> stack = new Stack();
-                          stack.push(r0 * C + c0);
-                          colors[r0][c0] = ++t;
-
-                          while (!stack.isEmpty()) {
-                              int node = stack.pop();
-                              int r = node / C, c = node % C;
-                              // neighbors 函数，获取
-                              for (int nei: neighbors(A, r, c)) {
-                                  int nr = nei / C, nc = nei % C;
-                                  // 这里其实已经剪枝了
-                                  if (A[nr][nc] == 1 && colors[nr][nc] == 0) {
-                                      colors[nr][nc] = t;
-                                      stack.push(nr * C + nc);
-                                  }
-                              }
-                          }
-                      }
-
-              return colors;
-          }
-
-          /**
-           * 获取指定位置的点，在二维数组范围之内的邻接点
-           * @param A 初始岛屿信息
-           * @param r 行
-           * @param c 列
-           * @return
-           */
-          public List<Integer> neighbors(int[][] A, int r, int c) {
-              int R = A.length, C = A[0].length;
-              List<Integer> ans = new ArrayList();
-              // r*C+c 是将
-              if (0 <= r-1) ans.add((r-1) * R + c);
-              if (0 <= c-1) ans.add(r * R + (c-1));
-              if (r+1 < R) ans.add((r+1) * R + c);
-              if (c+1 < C) ans.add(r * R + (c+1));
-              return ans;
-          }
-
-      }
+             // 获取起始岛屿的第一个位置
+             int startR=-1;
+             int startC=-1;
+             boolean flag2 = false;
+             for (int i = 0; i < R; i++) {
+                 if (flag2) break;
+                 for (int j = 0; j < C; j++) {
+                     if (grid[i][j]==2) {
+                         startR=i;
+                         startC=j;
+                         flag2=true;
+                     }
+                 }
+             }
 
 
-      class Node {
-          int r, c, depth;
-          Node(int r, int c, int d) {
-              this.r = r;
-              this.c = c;
-              depth = d;
-          }
-      }
+             // 但凡是为起始岛屿（value=2）的节点，深度都设为2
+             queue.add(new Node(startR,startC,0));
+             while (!queue.isEmpty()) {
+                 Node node = queue.poll();
+                 List<Integer> neighbors = getNeighbors(grid, node.r, node.c);
+                 for (Integer neighbor : neighbors) {
+                     // 获取邻接位置的坐标（升维）
+                     int nr = neighbor / C;
+                     int nc = neighbor % C;
+                     grid[nr][nc]=-1;
+                     if (grid[nr][nc]==2) { // 还是起始岛屿，深度我们还是设为0
+                         queue.add(new Node(nr,nc,0));
+                     } else if (grid[nr][nc]==-1) { // 已经遍历过，就不往队列添加了
+                         continue;
+                     } else if (grid[nr][nc]==0) { // 如果是海洋的话，我们要为深度+1
+                         queue.add(new Node(nr,nc,node.depth+1));
+                     } else if (grid[nr][nc]==1) { // 当前节点的邻接节点，已经有目标岛屿了，说明我们的桥建完了
+                         return node.depth;
+                     }
+                 }
+             }
+
+             return -1;
+         }
+
+
+         /**
+          * 通过递归，标记处第一座岛屿的位置
+          * @param grid
+          * @param r
+          * @param c
+          */
+         public void markSourceIsland(int[][] grid,int r,int c) {
+             int R = grid.length;
+             int C = grid[0].length;
+             if (r<0 || r>=R || c<0 || c>=C || grid[r][c]!=1) return;
+             // 进行标记
+             grid[r][c]=2;
+             int []rs={0,0,1,-1};
+             int []cs={1,-1,0,0};
+             // 递归标记
+             for (int i = 0; i < 4; i++) {
+                 markSourceIsland(grid,r+rs[i],c+cs[i]);
+             }
+         }
+
+         /**
+          * 获取当前位置的，没有超出范围的、没有被遍历过的周围的点集合
+          * 遍历过的点，我们全部标记为 -1
+          * @param grid 二维数组
+          * @param r 行
+          * @param c 列
+          * @return
+          */
+         public List<Integer> getNeighbors(int[][] grid,int r,int c) {
+             int R = grid.length;
+             int C = grid[0].length;
+             List<Integer> res = new ArrayList<>();
+             int []rs={0,0,1,-1};
+             int []cs={1,-1,0,0};
+             for (int i = 0; i < 4; i++) {
+                 int newR = r - rs[i];
+                 int newC = c - cs[i];
+                 if (posIsOk(grid,newR,newC)) {
+                     // 降维
+                     res.add(newR*C+newC);
+                 }
+             }
+             return res;
+         }
+
+         /**
+          * 判断当前位置是否：
+          * 1、在范围之内
+          * @param grid
+          * @param r
+          * @param c
+          * @return
+          */
+         public boolean posIsOk(int[][]grid,int r,int c) {
+             int R = grid.length;
+             int C = grid[0].length;
+             if (r<0 || r>=R || c<0 || c>=C) return false;
+             return true;
+         }
+
+
+         class Node {
+             public int r;
+             public int c;
+             public int depth;
+
+             public Node(int r, int c, int depth) {
+                 this.r = r;
+                 this.c = c;
+                 this.depth = depth;
+             }
+         }
 
 //leetcode submit region end(Prohibit modification and deletion)
 
-  }
+     }
+ }
