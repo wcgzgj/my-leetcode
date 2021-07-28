@@ -60,7 +60,9 @@
  import sun.tools.tree.OrExpression;
 
  import java.util.ArrayList;
+ import java.util.LinkedList;
  import java.util.List;
+ import java.util.Stack;
 
  public class BinaryTreePreorderTraversal{
       public static void main(String[] args) {
@@ -84,17 +86,20 @@
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        preOrderRecurson(root,list);
-        return list;
+        List<Integer> res = new ArrayList<>();
+        if (root==null) return res;
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        stack.addLast(root);
+        while (!stack.isEmpty()) {
+            TreeNode tmp = stack.removeLast();
+            res.add(tmp.val);
+            // 我们想实现的是前序遍历，那栈里面要先放右，再放左
+            if (tmp.right!=null) stack.addLast(tmp.right);
+            if (tmp.left!=null) stack.addLast(tmp.left);
+        }
+        return res;
     }
 
-    public void preOrderRecurson(TreeNode root,List<Integer> list) {
-        if (root==null) return;
-        list.add(root.val);
-        preOrderRecurson(root.left,list);
-        preOrderRecurson(root.right,list);
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

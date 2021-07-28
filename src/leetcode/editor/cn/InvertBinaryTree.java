@@ -49,28 +49,21 @@
 class Solution {
     public TreeNode invertTree(TreeNode root) {
         if (root==null) return root;
-        reverseRecurison(root);
+        // 翻转
+        recursion(root);
         return root;
     }
 
-    // public void reverseRecurison(TreeNode root) {
-    //     if (root==null) return;
-    //     TreeNode tmp = root.left;
-    //     root.left=root.right;
-    //     root.right=tmp;
-    //     reverseRecurison(root.left);
-    //     reverseRecurison(root.right);
-    // }
-
-    public void reverseRecurison(TreeNode root) {
+    public void recursion(TreeNode root) {
         if (root==null) return;
-
-        reverseRecurison(root.left);
-        reverseRecurison(root.right);
+        recursion(root.left);
+        recursion(root.right);
         TreeNode tmp = root.left;
         root.left=root.right;
         root.right=tmp;
     }
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

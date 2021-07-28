@@ -23,12 +23,17 @@
 
  import domain.TreeNode;
 
+ import java.util.Arrays;
  import java.util.HashMap;
  import java.util.Map;
 
  public class ConstructBinaryTreeFromPreorderAndInorderTraversal{
       public static void main(String[] args) {
            Solution solution = new ConstructBinaryTreeFromPreorderAndInorderTraversal().new Solution();
+          int [] pre_order = {3,9,20,15,7};
+          int [] in_order = {9,3,15,20,7};
+          TreeNode root = solution.buildTree(pre_order, in_order);
+
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 /**
@@ -41,35 +46,30 @@
  * }
  */
 class Solution {
-    //用来存放中序遍历中数组元素的下标
-    //方便通过前序遍历中的数组元素，找寻中序遍历中相同元苏的位置
-    public Map<Integer, Integer> map = new HashMap<>();
-
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder.length==0) return null;
+        if (preorder.length==0 || inorder.length==0) return null;
+        // 前序序列的第一个元素，一定是整棵树的根节点
+        TreeNode root = new TreeNode(preorder[0]);
         for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i],i);
+            /**
+             * 找到中序遍历中，根节点的位置
+             * 此时，i 就是左子树的长度
+             * inorder.length - (i+1) 就是右子树的长度
+             */
+            if (preorder[0]==inorder[i]) {
+                int[] pre_left = Arrays.copyOfRange(preorder, 1, i+1);
+                int[] pre_right = Arrays.copyOfRange(preorder, i + 1, preorder.length);
+
+                int[] in_left = Arrays.copyOfRange(inorder, 0, i);
+                int[] in_right = Arrays.copyOfRange(inorder, i + 1, inorder.length);
+                root.left=buildTree(pre_left,in_left);
+                root.right=buildTree(pre_right,in_right);
+                break;
+            }
         }
-        return buildMyTree(preorder,inorder,0,preorder.length-1,0,inorder.length-1);
-    }
-
-    public TreeNode buildMyTree(int[] preorder,int[] inorder,int pre_start,int pre_end,int in_start,int in_end) {
-        if (pre_start>pre_end) return null;//终止条件
-
-        //根节点值
-        int root_val = preorder[pre_start];
-        //根节点值所在的位置
-        Integer root_val_index = map.get(root_val);
-        TreeNode root = new TreeNode(root_val);
-
-        //左子树节点个数
-        int left_tree_size = root_val_index - in_start;
-
-        //递归建树
-        root.left=buildMyTree(preorder,inorder,pre_start+1,pre_start+left_tree_size,in_start,root_val_index-1);
-        root.right=buildMyTree(preorder,inorder,pre_start+1+left_tree_size,pre_end,root_val_index+1,in_end);
         return root;
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

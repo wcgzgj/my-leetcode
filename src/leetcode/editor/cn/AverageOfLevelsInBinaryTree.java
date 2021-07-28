@@ -56,15 +56,17 @@ class Solution {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
+            // 要记录队列的长度，因为这是当前层的节点个数
             int size = queue.size();
-            double count=0;
+            // 用来存储当前层的所有节点的值的和
+            Double sum = 0d;
             for (int i = 0; i < size; i++) {
                 TreeNode tmp = queue.poll();
-                count+=tmp.val;
+                sum+=tmp.val;
                 if (tmp.left!=null) queue.offer(tmp.left);
                 if (tmp.right!=null) queue.offer(tmp.right);
             }
-            res.add(count/size);
+            res.add(Double.valueOf(sum/size));
         }
         return res;
     }
