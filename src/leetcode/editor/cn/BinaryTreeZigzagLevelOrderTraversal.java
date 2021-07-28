@@ -51,30 +51,24 @@ class Solution {
      * @return
      */
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>>res = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
         if (root==null) return res;
-
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-
-        // 记录层数
-        int lay=1;
+        int lay = 1;
         while (!queue.isEmpty()) {
-            List<Integer> tmpRes = new ArrayList<>();
-            // 记录当前层的节点个数
+            List<Integer> rowList = new ArrayList<>();
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode tmp = queue.poll();
-                tmpRes.add(tmp.val);
                 if (tmp.left!=null) queue.offer(tmp.left);
                 if (tmp.right!=null) queue.offer(tmp.right);
+                rowList.add(tmp.val);
             }
-            // 偶数层从右往左，需要我们对 list 进行一次 reverse 操作
-            if (lay%2==0) {
-                Collections.reverse(tmpRes);
-            }
-            res.add(tmpRes);
+            // 如果是偶数层的话，需要反转
+            if (lay%2==0) Collections.reverse(rowList);
             lay++;
+            res.add(rowList);
         }
         return res;
     }

@@ -60,60 +60,9 @@
  * }
  */
 class Solution {
+
     public void recoverTree(TreeNode root) {
-        if (root==null) return;
-        List<TreeNode> list = new ArrayList<>();
-        getAllNodes(root,list);
-        TreeNode[] nodes = list.toArray(new TreeNode[list.size()]);
-        TreeNode x=null;
-        TreeNode y=null;
-        for (int i = 0; i < nodes.length - 1; i++) {
-            if (nodes[i].val>nodes[i+1].val) {
-                y=nodes[i+1];
-                //如果x还为null，说明大的那个值还没有找到
-                if (x==null) {
-                    x=nodes[i];
-                }
-            }
-        }
-        if (x!=null && y!=null) {
-            int tmp = y.val;
-            y.val=x.val;
-            x.val=tmp;
-        }
 
-        //存放地址的列表
-        // List<Integer> indexs = new ArrayList<>();
-        // for (int i = 0; i < nodes.length; i++) {
-        //     if (i+1<nodes.length && nodes[i].val>nodes[i+1].val && indexs.size()==0) {
-        //         System.out.println(i);
-        //         indexs.add(i);
-        //         continue;
-        //     }
-        //     if (i-1>=0 && nodes[i].val<nodes[i-1].val && indexs.size()==1) {
-        //         indexs.add(i);
-        //         continue;
-        //     }
-        // }
-        // System.out.println(indexs.toString());
-        // int index1=indexs.get(0);
-        // int index2=indexs.get(1);
-        // int tmp = nodes[index1].val;
-        // nodes[index1].val=nodes[index2].val;
-        // nodes[index2].val=tmp;
-    }
-
-    /**
-     * 通过中序遍历，将所有节点放入list中
-     * @param root
-     * @return
-     */
-    public void getAllNodes(TreeNode root,List<TreeNode>list) {
-        //空节点不要
-        if (root==null) return;
-        getAllNodes(root.left,list);
-        list.add(root);
-        getAllNodes(root.right,list);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -395,6 +395,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/ImplementTriePrefixTree.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ImplementTriePrefixTree.java" />
+              <option name="questionId" value="208" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/IntegerBreak.java">
           <value>
             <LeetcodeEditor>
@@ -1000,6 +1008,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ThreeSumClosest.java" />
               <option name="questionId" value="16" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/TrimABinarySearchTree.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/TrimABinarySearchTree.java" />
+              <option name="questionId" value="669" />
             </LeetcodeEditor>
           </value>
         </entry>
