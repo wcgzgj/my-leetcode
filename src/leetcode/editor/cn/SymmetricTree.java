@@ -51,14 +51,16 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        return isSymmetric(root,root);
+        return root==null?true:recursion(root.left,root.right);
     }
 
-    public boolean isSymmetric(TreeNode p,TreeNode q) {
-        if (p==null && q==null) return true;
-        //前面已经判断过全为空的情况，所以这么写来判断是否有一个为空，是可以的
-        if (p==null || q==null) return false;
-        return p.val==q.val && isSymmetric(p.left,q.right) && isSymmetric(p.right,q.left);
+    public boolean recursion(TreeNode left,TreeNode right) {
+        if (left==null && right==null) return true;
+        if (left==null || right==null) return false;
+        if (left.val != right.val) return false;
+        // 这里要注意，因为是镜像的，所以要注意对比的节点的匹配
+        return recursion(left.left,right.right) &&
+                recursion(left.right,right.left);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
