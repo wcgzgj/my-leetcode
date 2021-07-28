@@ -2,7 +2,9 @@ package test;
 
 import domain.ListNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @ClassName MemoryLimitTest
@@ -15,9 +17,21 @@ import java.util.LinkedList;
 public class MemoryLimitTest {
     public static void main(String[] args) {
         // 这里我们尝试创建一个长度为 Integer.MAX_VALUE 的链表，看看会不会报错
-        ListNode head = createList(2147483647);
-        System.out.println("创建完成！！");
-        outList(head);
+        // 改成多线程操作
+
+        // 换成多线程操作，还是跑不满。。。。
+        List<ListNode> heads = new ArrayList<>();
+        for (int i = 0; i < 2000; i++) {
+            new Thread(()-> {
+                ListNode head = createList(100000000);
+                // 存储head信息，避免被 GC
+                heads.add(head);
+            }).start();
+        }
+
+        for (ListNode head : heads) {
+            outList(head);
+        }
     }
 
     /**
@@ -31,7 +45,7 @@ public class MemoryLimitTest {
         ListNode tail = head;
         for (int i = 1; i < n; i++) {
             ListNode tmp = new ListNode(i);
-            System.out.println("正在创建节点："+i);
+            System.out.println(Thread.currentThread()+"正在创建节点："+i);
             tail.next=tmp;
             tail=tail.next;
         }

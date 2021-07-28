@@ -50,6 +50,11 @@
           * -1,-1,-1,-1
           * -1,-1,-1,-1
           */
+         int[][] grid = {{0,1,0},
+                         {0,0,0},
+                         {0,0,1}};
+         int res = solution.shortestBridge(grid);
+         System.out.println(res);
      }
 
      //leetcode submit region begin(Prohibit modification and deletion)
@@ -58,13 +63,15 @@
              if (grid==null || grid.length==0 || grid[0].length==0) return 0;
              int R = grid.length;
              int C = grid[0].length;
-             boolean flag = false;
 
+
+             boolean flag = false;
              // 将第一座岛屿的位置，全部换成2
              for (int i = 0; i < R; i++) {
                  if (flag) break;
                  for (int j = 0; j < C; j++) {
                      if (grid[i][j]==1) {
+                         // 当 source 岛屿已经被全部遍历后，标记 flag，跳出二层循环
                          markSourceIsland(grid,i,j);
                          flag=true;
                          break;
@@ -100,7 +107,7 @@
                      // 获取邻接位置的坐标（升维）
                      int nr = neighbor / C;
                      int nc = neighbor % C;
-                     grid[nr][nc]=-1;
+
                      if (grid[nr][nc]==2) { // 还是起始岛屿，深度我们还是设为0
                          queue.add(new Node(nr,nc,0));
                      } else if (grid[nr][nc]==-1) { // 已经遍历过，就不往队列添加了
@@ -110,9 +117,10 @@
                      } else if (grid[nr][nc]==1) { // 当前节点的邻接节点，已经有目标岛屿了，说明我们的桥建完了
                          return node.depth;
                      }
+                     // 遍历过后，将遍历过的位置设置为 -1
+                     grid[nr][nc]=-1;
                  }
              }
-
              return -1;
          }
 
@@ -126,7 +134,9 @@
          public void markSourceIsland(int[][] grid,int r,int c) {
              int R = grid.length;
              int C = grid[0].length;
+             // 当超出范围或者当前位置不是岛屿的时候，递归终止
              if (r<0 || r>=R || c<0 || c>=C || grid[r][c]!=1) return;
+
              // 进行标记
              grid[r][c]=2;
              int []rs={0,0,1,-1};
@@ -152,8 +162,8 @@
              int []rs={0,0,1,-1};
              int []cs={1,-1,0,0};
              for (int i = 0; i < 4; i++) {
-                 int newR = r - rs[i];
-                 int newC = c - cs[i];
+                 int newR = r + rs[i];
+                 int newC = c + cs[i];
                  if (posIsOk(grid,newR,newC)) {
                      // 降维
                      res.add(newR*C+newC);
@@ -163,8 +173,7 @@
          }
 
          /**
-          * 判断当前位置是否：
-          * 1、在范围之内
+          * 只判断当前位置是否在范围内
           * @param grid
           * @param r
           * @param c

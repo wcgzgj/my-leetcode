@@ -26,47 +26,55 @@
 
  import domain.TreeNode;
 
- import java.util.ArrayList;
- import java.util.LinkedList;
- import java.util.List;
- import java.util.Queue;
+ import java.util.*;
 
  public class BinaryTreeZigzagLevelOrderTraversal{
       public static void main(String[] args) {
            Solution solution = new BinaryTreeZigzagLevelOrderTraversal().new Solution();
+          List<Integer> list = new ArrayList<>();
+          list.add(1);
+          list.add(2);
+          Collections.reverse(list);
+          System.out.println(list);
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 
 class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (root==null) return res;
-        Queue<TreeNode> que = new LinkedList<>();
-        //记录遍历的层数
-        int level = 0;
-        que.offer(root);
-        while (!que.isEmpty()) {
-            //记录当前层的元素
-            List<Integer> item = new LinkedList<>();
-            /**
-             * 一定要提前获取当前的层数
-             * 不然queue的大小会随着后的进队列不断改变
-             */
-            int size = que.size();
-            //保证是在当层遍历
-            for (int i = 0; i < size; i++) {
-                TreeNode tmp = que.poll();
-                if (tmp.left!=null) que.offer(tmp.left);
-                if (tmp.right!=null) que.offer(tmp.right);
 
-                if (level%2==0) {//偶数层头插
-                    item.add(tmp.val);
-                } else { //奇数层尾插
-                    item.add(0,tmp.val);
-                }
+    /**
+     * 这道题，可以看成102的变种
+     * 在 102 里，我们获得了每层的节点数据
+     * 在这道题里，我们还要做一个奇偶层判断
+     * 奇数层从左往右遍历
+     * 偶数层从右往左遍历
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>>res = new ArrayList<>();
+        if (root==null) return res;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        // 记录层数
+        int lay=1;
+        while (!queue.isEmpty()) {
+            List<Integer> tmpRes = new ArrayList<>();
+            // 记录当前层的节点个数
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode tmp = queue.poll();
+                tmpRes.add(tmp.val);
+                if (tmp.left!=null) queue.offer(tmp.left);
+                if (tmp.right!=null) queue.offer(tmp.right);
             }
-            res.add(item);
-            level++;
+            // 偶数层从右往左，需要我们对 list 进行一次 reverse 操作
+            if (lay%2==0) {
+                Collections.reverse(tmpRes);
+            }
+            res.add(tmpRes);
+            lay++;
         }
         return res;
     }
