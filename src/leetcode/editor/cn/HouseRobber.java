@@ -78,41 +78,52 @@ class Solution {
     //     return pre;
     // }
 
-      //方法3：回溯
-          int max=-1;
+      ////方法3：回溯
+      //    int max=-1;
+      //public int rob(int[] nums) {
+      //    if (nums.length==0) return 0;
+      //    //选第一个
+      //    dfs(nums,true,nums[0],1);
+      //    //不选第一个
+      //    dfs(nums,false,0,1);
+      //    return max;
+      //}
+      //
+      //public void dfs(int[] nums,boolean hasPre,int track,int depth) {
+      //    if (depth==nums.length) {
+      //        if (track>max) {
+      //            max=track;
+      //        }
+      //        return;
+      //    }
+      //    //如果前一个没有选过
+      //    //当前可选可不选
+      //    if (!hasPre) {
+      //        //选
+      //        dfs(nums,true,track+nums[depth],depth+1);
+      //        //不选
+      //        dfs(nums,false,track,depth+1);
+      //        //参数若要使用隐式的回溯，千万记住，不能使用++
+      //    } else {//如果前一个已经选过了，那当前只能不选
+      //        dfs(nums,false,track,depth+1);
+      //    }
+      //}
+      ///*
+      //  时间复杂度是O(2^n)，高的吓人
+      //  但是好歹能跑出部分数据（因为题目性质，无法减枝）
+      //  总算能体会回溯算法的万用性了
+      // */
       public int rob(int[] nums) {
-          if (nums.length==0) return 0;
-          //选第一个
-          dfs(nums,true,nums[0],1);
-          //不选第一个
-          dfs(nums,false,0,1);
-          return max;
-      }
-
-      public void dfs(int[] nums,boolean hasPre,int track,int depth) {
-          if (depth==nums.length) {
-              if (track>max) {
-                  max=track;
-              }
-              return;
+          if (nums.length==1) return nums[0];
+          if (nums.length==2) Math.max(nums[2-1],nums[0]);
+          int[] res = new int[nums.length + 1];
+          res[1]=nums[1-1];
+          res[2]=Math.max(nums[2-1],res[1]);
+          for (int i = 3; i <=nums.length; i++) {
+              res[i]=Math.max(res[i-1],res[i-2]+nums[i-1]);
           }
-          //如果前一个没有选过
-          //当前可选可不选
-          if (!hasPre) {
-              //选
-              dfs(nums,true,track+nums[depth],depth+1);
-              //不选
-              dfs(nums,false,track,depth+1);
-              //参数若要使用隐式的回溯，千万记住，不能使用++
-          } else {//如果前一个已经选过了，那当前只能不选
-              dfs(nums,false,track,depth+1);
-          }
+          return res[res.length-1];
       }
-      /*
-        时间复杂度是O(2^n)，高的吓人
-        但是好歹能跑出部分数据（因为题目性质，无法减枝）
-        总算能体会回溯算法的万用性了
-       */
 
 }
 //leetcode submit region end(Prohibit modification and deletion)
