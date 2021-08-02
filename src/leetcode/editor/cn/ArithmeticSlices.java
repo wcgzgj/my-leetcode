@@ -52,6 +52,7 @@
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+
     public int numberOfArithmeticSlices(int[] nums) {
         if (nums.length<=2) return 0;
         int count=0;
