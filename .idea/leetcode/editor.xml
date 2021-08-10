@@ -59,6 +59,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/BeautifulArray.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/BeautifulArray.java" />
+              <option name="questionId" value="968" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/BinarySearch.java">
           <value>
             <LeetcodeEditor>
@@ -152,6 +160,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/BinaryWatch.java" />
               <option name="questionId" value="401" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/BurstBalloons.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/BurstBalloons.java" />
+              <option name="questionId" value="312" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -312,6 +328,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/DiameterOfBinaryTree.java" />
               <option name="questionId" value="543" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/DifferentWaysToAddParentheses.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/DifferentWaysToAddParentheses.java" />
+              <option name="questionId" value="241" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -1016,6 +1040,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/SingleNumberIi.java" />
               <option name="questionId" value="137" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/SlidingWindowMaximum.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/SlidingWindowMaximum.java" />
+              <option name="questionId" value="239" />
             </LeetcodeEditor>
           </value>
         </entry>
