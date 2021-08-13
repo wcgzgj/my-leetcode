@@ -13,14 +13,17 @@ import javax.xml.transform.Source;
  **/
 public class IntegerTest {
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(0);
-        plus(root);
-        System.out.println(root.val);
+        //TreeNode root = new TreeNode(0);
+        //plus(root);
+        //System.out.println(root.val);
+        Integer num = new Integer(1);
+        plus(num);
+        System.out.println(num);
     }
 
     public static void plus(Integer i) {
         for (int j = 0; j < 10; j++) {
-            i+=new Integer(1);
+            i++;
         }
     }
 
