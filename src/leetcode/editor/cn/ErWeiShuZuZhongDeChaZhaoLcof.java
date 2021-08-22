@@ -43,6 +43,12 @@
       }
       //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+          /**
+           * 行增 列减
+           * @param matrix
+           * @param target
+           * @return
+           */
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
         if (matrix==null || matrix.length==0 || matrix[0].length==0) return false;
         int rows = matrix.length;//二维数组行数
