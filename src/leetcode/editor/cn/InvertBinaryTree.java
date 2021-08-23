@@ -48,22 +48,14 @@
  */
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        if (root==null) return root;
-        // 翻转
-        recursion(root);
-        return root;
-    }
-
-    public void recursion(TreeNode root) {
-        if (root==null) return;
-        recursion(root.left);
-        recursion(root.right);
+        if (root==null) return null;
+        invertTree(root.left);
+        invertTree(root.right);
         TreeNode tmp = root.left;
         root.left=root.right;
         root.right=tmp;
+        return root;
     }
-
-
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
