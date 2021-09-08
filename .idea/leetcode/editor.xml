@@ -443,6 +443,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/ExchangeLcci.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ExchangeLcci.java" />
+              <option name="questionId" value="100182" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/FanZhuanLianBiaoLcof.java">
           <value>
             <LeetcodeEditor>
@@ -632,6 +640,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/InvertBinaryTree.java" />
               <option name="questionId" value="226" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/Ipo.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/Ipo.java" />
+              <option name="questionId" value="502" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -1216,6 +1232,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ShortestBridge.java" />
               <option name="questionId" value="971" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/leetcode/editor/cn/ShuJuLiuZhongDeZhongWeiShuLcof.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/leetcode/editor/cn/ShuJuLiuZhongDeZhongWeiShuLcof.java" />
+              <option name="questionId" value="100303" />
             </LeetcodeEditor>
           </value>
         </entry>
